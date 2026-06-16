@@ -9,8 +9,8 @@ import json
 import os
 
 # Configuration
-JSON_FILE = "3do_games_3do.json"
-OUTPUT_HTML = "3do_games_3do.html"
+JSON_FILE = "3do_games_4do.json"
+OUTPUT_HTML = "3do_games_4do.html"
 PLACEHOLDER_IMAGE = "https://raw.githubusercontent.com/igiteam/3do-covers/refs/heads/master/3do-cover-default.png"
 RAW_BASE_URL = "https://raw.githubusercontent.com/igiteam/3do-covers/refs/heads/main/covers"
 
@@ -111,7 +111,7 @@ def generate_html(games):
 
     .title-card-image-container {{
       width: 100%;
-      aspect-ratio: 3/5;
+      aspect-ratio: 4/6;
       overflow: hidden;
       position: relative;
       background-color: #1a1a1a;

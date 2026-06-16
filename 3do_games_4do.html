@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3DO Games Collection</title>
+
+  <link rel="icon" href="https://cdn.gitgpt.chat/rtx/images/3do_logo.jpg" type="image/png">
+  <link rel="apple-touch-icon" href="https://cdn.gitgpt.chat/rtx/images/3do_logo.jpg" sizes="180x180">
+  <link rel="icon" type="image/png" href="https://cdn.gitgpt.chat/rtx/images/3do_logo.jpg" sizes="192x192">
+  <link rel="icon" type="image/png" href="https://cdn.gitgpt.chat/rtx/images/3do_logo.jpg" sizes="512x512">
+  <meta itemprop="name" content="3DO Games Collection">
+  <meta property="og:title" content="3DO Games Collection">
+  <meta property="og:url" content="">
+  <meta property="og:type" content="website">
+  <meta name="twitter:title" content="3DO Games Collection">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="apple-touch-icon" href="https://cdn.gitgpt.chat/rtx/images/3do_logo.jpg" sizes="180x180">
+
+  <style>
+    body {
+      background-color: #1a1a1a;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      margin: 4px 20px;
+      padding: 0;
+    }
+
+    #results {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      max-width: 1400px;
+      margin: 0 auto;
+      background-color: #1a1a1a;
+      margin-top: 4px;
+      z-index: 1000;
+    }
+
+    .title-card {
+      background: #2a2a2a;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+
+    .title-card:hover {
+      transform: scale(1.05);
+      z-index: 10;
+    }
+
+    .title-card-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .title-card-container {
+      width: 100%;
+      position: relative;
+    }
+
+    .title-card-image-container {
+      width: 100%;
+      aspect-ratio: 4/6;
+      overflow: hidden;
+      position: relative;
+      background-color: #1a1a1a;
+    }
+
+    .title-card-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.3s;
+    }
+
+    .title-card-image-container .fallback-title {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 10px;
+      box-sizing: border-box;
+      background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+      color: #888;
+      font-size: 14px;
+      font-weight: 500;
+      word-break: break-word;
+      border: 1px solid #333;
+    }
+
+    .fill-color-Playable {
+      background-color: #42991b !important;
+      color: white !important;
+      font-weight: 700 !important;
+    }
+
+    .card-body {
+      flex: 1 1 auto;
+      min-height: 1px;
+      padding: 0.5rem 1.25rem !important;
+    }
+
+    .text-center {
+      text-align: center !important;
+    }
+
+    .py-1 {
+      padding-top: 0.25rem !important;
+      padding-bottom: 0.25rem !important;
+    }
+
+    .my-0 {
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+
+    small {
+      font-size: 80%;
+    }
+
+    /* Search container */
+    #saved-search-container {
+      position: sticky;
+      z-index: 10000;
+      margin-left: auto;
+      margin-right: auto;
+      margin: 8px 0px;
+    }
+
+    #saved-search-input {
+      padding: 10px;
+      width: calc(100% - 20px);
+      border: 1px solid #555;
+      border-radius: 4px;
+      background: #444;
+      color: white;
+      flex: 1;
+    }
+
+    .search-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+
+    #saved-search-input::placeholder {
+      color: #aaa;
+    }
+
+    #saved-results-count {
+      color: white;
+      font-size: 14px;
+      text-align: center;
+      margin-top: 5px;
+    }
+
+    /* Hide classes */
+    .hidden-game {
+      display: none !important;
+    }
+
+    .title-card.image-failed {
+      display: none !important;
+    }
+
+    .title-card-link.hidden-game {
+      display: none !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="saved-search-container">
+    <div class="search-row">
+      <img src="https://cdn.gitgpt.chat/rtx/images/3do_logo.jpg" class="icon" alt="3DO logo">
+      <input type="text" id="saved-search-input" placeholder="Search games...">
+      <a href="https://www.ppsspp.org/" target="_blank">
+        <img src="https://cdn.gitgpt.chat/rtx/images/3do_controller.png" class="icon" alt="3DO">
+      </a>
+      <a href="https://cdn.gitgpt.chat/rtx/3do_magazine.html" target="_blank">
+        <img src="https://cdn.gitgpt.chat/rtx/images/3do_magazine.png" class="icon" alt="3DO Magazine">
+      </a>
+    </div>
+    <div id="saved-results-count"></div>
+  </div>
+
+  <div class="row" id="results">
+
+    <div class="col px-1 mb-4 title-card" data-title-name="20th Century Almanac" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_20thcenturyalmanac_au.png" loading="lazy"
+              title="20th Century Almanac" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">20th Century Almanac</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="3DO Interactive Sampler CD" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_3dointeractivesamplercd.png" loading="lazy"
+              title="3DO Interactive Sampler CD" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">3DO Interactive Sampler CD</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Autobahn Tokio" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_autobahntokio_jp.png" loading="lazy" title="Autobahn Tokio"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Autobahn Tokio</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Battle Chess" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_battlechess_2.png" loading="lazy" title="Battle Chess"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Battle Chess</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Blade Force" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_bladeforce.png" loading="lazy" title="Blade Force"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Blade Force</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Brain Dead" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_braindead.png" loading="lazy" title="Brain Dead"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Brain Dead</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Burning Soldier" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_burningsoldier_au.png" loading="lazy" title="Burning Soldier"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Burning Soldier</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Bust-A-Move" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_bustamove_jp.png" loading="lazy" title="Bust-A-Move"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Bust-A-Move</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Carrier Fortress at Sea" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_carrierfortressatsea.png" loading="lazy"
+              title="Carrier Fortress at Sea" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Carrier Fortress at Sea</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Corpse Killer" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_corpsekiller_au.png" loading="lazy" title="Corpse Killer"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Corpse Killer</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Creature Shock" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_creatureshock.png" loading="lazy" title="Creature Shock"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Creature Shock</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Cyberia" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_cyberia.png" loading="lazy" title="Cyberia"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Cyberia</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="D" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_d.png" loading="lazy" title="D"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">D</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Deathkeep" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_deathkeep.png" loading="lazy" title="Deathkeep"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Deathkeep</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Demolition Man" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_demolitionman_au.png" loading="lazy" title="Demolition Man"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Demolition Man</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Dennis Miller" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_dennismiller.png" loading="lazy" title="Dennis Miller"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Dennis Miller</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Doom" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_doom.png" loading="lazy" title="Doom"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Doom</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Dragon's Lair" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_dragonslair.png" loading="lazy" title="Dragon's Lair"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Dragon's Lair</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Fatty Bear's Birthday Surprise" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_fattybearsbirthdayssurprise_jp.png" loading="lazy"
+              title="Fatty Bear's Birthday Surprise"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Fatty Bear's Birthday Surprise</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Fatty Bear's Fun Pack" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_fattybearsfunpack_jp.png" loading="lazy"
+              title="Fatty Bear's Fun Pack" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Fatty Bear's Fun Pack</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="FIFA International Soccer" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_fifainternationalsoccer_au.png" loading="lazy"
+              title="FIFA International Soccer" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">FIFA International Soccer</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Flying Nightmares" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_flyingnightmares.png" loading="lazy" title="Flying Nightmares"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Flying Nightmares</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Foes of Ali" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_foesofali_au.png" loading="lazy" title="Foes of Ali"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Foes of Ali</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Gex" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_gex.png" loading="lazy" title="Gex"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Gex</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Hell" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_hell.png" loading="lazy" title="Hell"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Hell</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Icebreaker" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_icebreaker.png" loading="lazy" title="Icebreaker"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Icebreaker</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Immercenary" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_immercenary.png" loading="lazy" title="Immercenary"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Immercenary</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Interplay 3DO Buffet" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_interplay3dobuffet.png" loading="lazy"
+              title="Interplay 3DO Buffet" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Interplay 3DO Buffet</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Jammit" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_jammit.png" loading="lazy" title="Jammit"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Jammit</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="John Madden Football" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_johnmaddenfootball_au.png" loading="lazy"
+              title="John Madden Football" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">John Madden Football</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Jurassic Park Interactive" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_jurassicparkinteractive.png" loading="lazy"
+              title="Jurassic Park Interactive" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Jurassic Park Interactive</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Killing Time" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_killingtime.png" loading="lazy" title="Killing Time"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Killing Time</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Kingdom: The Far Reaches" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_kingdomthefarreaches.png" loading="lazy"
+              title="Kingdom: The Far Reaches" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Kingdom: The Far Reaches</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Mad Dog II: The Lost Gold" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_maddog2.png" loading="lazy" title="Mad Dog II: The Lost Gold"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Mad Dog II: The Lost Gold</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Mad Dog McCree" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_maddogmccree.png" loading="lazy" title="Mad Dog McCree"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Mad Dog McCree</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Microcosm" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_microcosm_au.png" loading="lazy" title="Microcosm"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Microcosm</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Myst" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_myst.png" loading="lazy" title="Myst"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Myst</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Night Trap" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_nighttrap.png" loading="lazy" title="Night Trap"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Night Trap</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Novastorm" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_novastorm.png" loading="lazy" title="Novastorm"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Novastorm</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Off-World Interceptor" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_offworldinterceptor.png" loading="lazy"
+              title="Off-World Interceptor" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Off-World Interceptor</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Out of This World" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_outofthisworld.png" loading="lazy" title="Out of This World"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Out of This World</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Paddock Note '95" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_paddocknote95_jp.png" loading="lazy" title="Paddock Note '95"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Paddock Note '95</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Panasonic Sampler CD" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_panasonicsamplercd.png" loading="lazy"
+              title="Panasonic Sampler CD" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Panasonic Sampler CD</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Pebble Beach Golf Links" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_pebblebeachgolflinks_au.png" loading="lazy"
+              title="Pebble Beach Golf Links" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Pebble Beach Golf Links</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Phoenix 3" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_phoenix3.png" loading="lazy" title="Phoenix 3"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Phoenix 3</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Plumbers Don't Wear Ties" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_plumbersdontwearties_au.png" loading="lazy"
+              title="Plumbers Don't Wear Ties" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Plumbers Don't Wear Ties</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Primal Rage" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_primalrage.png" loading="lazy" title="Primal Rage"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Primal Rage</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Psychic Detective" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_psychicdetective.png" loading="lazy" title="Psychic Detective"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Psychic Detective</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Putt-Putt Joins the Parade" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_puttputtjoinstheperade_jp.png" loading="lazy"
+              title="Putt-Putt Joins the Parade" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Putt-Putt Joins the Parade</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Putt-Putt's Fun Pack" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_puttputtsfunpack_jp.png" loading="lazy"
+              title="Putt-Putt's Fun Pack" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Putt-Putt's Fun Pack</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Quarantine" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_quarentine_jp.png" loading="lazy" title="Quarantine"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Quarantine</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Quarterback Attack" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_quarterbackattack.png" loading="lazy"
+              title="Quarterback Attack" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Quarterback Attack</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Return Fire" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_returnfire_jp.png" loading="lazy" title="Return Fire"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Return Fire</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Road Rash" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_roadrash_au.png" loading="lazy" title="Road Rash"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Road Rash</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Robinson's Requiem" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_robinsonsrequiem_au.png" loading="lazy"
+              title="Robinson's Requiem" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Robinson's Requiem</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Samurai Shodown" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_samuraishodown_back.png" loading="lazy"
+              title="Samurai Shodown" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Samurai Shodown</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Sewer Shark" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_sewershark.png" loading="lazy" title="Sewer Shark"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Sewer Shark</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Shockwave" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_shockwave_au.png" loading="lazy" title="Shockwave"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Shockwave</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Shockwave 2" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_shockwave2.png" loading="lazy" title="Shockwave 2"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Shockwave 2</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Shockwave: Operation Jumpgate" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_shockwaveoperationjumpgate.png" loading="lazy"
+              title="Shockwave: Operation Jumpgate"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Shockwave: Operation Jumpgate</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Slam 'N Jam '95" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_slamnjam95_2.png" loading="lazy" title="Slam 'N Jam '95"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Slam 'N Jam '95</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Slayer" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_slayer.png" loading="lazy" title="Slayer"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Slayer</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Snow Job" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_snowjob.png" loading="lazy" title="Snow Job"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Snow Job</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Space Ace" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_spaceace.png" loading="lazy" title="Space Ace"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Space Ace</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Space Hulk" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_spacehulk_au.png" loading="lazy" title="Space Hulk"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Space Hulk</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Space Pirates" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_spacepirates.png" loading="lazy" title="Space Pirates"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Space Pirates</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Star Control 2" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_starcontrol2.png" loading="lazy" title="Star Control 2"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Star Control 2</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Star Wars Rebel Assault" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_starwarsrebelassault_2.png" loading="lazy"
+              title="Star Wars Rebel Assault" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Star Wars Rebel Assault</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Starblade" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_starblade_jp.png" loading="lazy" title="Starblade"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Starblade</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Stellar 7: Draxon's Revenge" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_stellar7draxonsrevenge.png" loading="lazy"
+              title="Stellar 7: Draxon's Revenge" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Stellar 7: Draxon's Revenge</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Strahl" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_strahl.png" loading="lazy" title="Strahl"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Strahl</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Super Street Fighter II Turbo" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_superstreetfighter2turbo_front_au.png" loading="lazy"
+              title="Super Street Fighter II Turbo"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Super Street Fighter II Turbo</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Super Wing Commander" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_superwingcommander.png" loading="lazy"
+              title="Super Wing Commander" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Super Wing Commander</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Supreme Warrior" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_supremewarrior.png" loading="lazy" title="Supreme Warrior"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Supreme Warrior</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Syndicate" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_syndicate.png" loading="lazy" title="Syndicate"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Syndicate</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Tanjou: Debut Pure" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_tanjoudebutpure_jp.png" loading="lazy"
+              title="Tanjou: Debut Pure" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Tanjou: Debut Pure</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="The Daedalus Encounter" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_thedaedalusencounter.png" loading="lazy"
+              title="The Daedalus Encounter" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">The Daedalus Encounter</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="The Horde" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_thehorde.png" loading="lazy" title="The Horde"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">The Horde</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="The Incredible Machine" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_incrediblemachine.png" loading="lazy"
+              title="The Incredible Machine" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">The Incredible Machine</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="The Lost Files of Sherlock Holmes" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_thelostfilesofsherlockholmes.png" loading="lazy"
+              title="The Lost Files of Sherlock Holmes"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">The Lost Files of Sherlock Holmes</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="The Need for Speed" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_theneedforspeed.png" loading="lazy" title="The Need for Speed"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">The Need for Speed</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Theme Park" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_themepark_2.png" loading="lazy" title="Theme Park"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Theme Park</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Tokio Koete Tategami" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_tokiokoetategami.png" loading="lazy"
+              title="Tokio Koete Tategami" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Tokio Koete Tategami</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Total Eclipse" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_totaleclipse_2.png" loading="lazy" title="Total Eclipse"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Total Eclipse</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Toyopet Outdoor World" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_toyopetoutdoorworld_jp.png" loading="lazy"
+              title="Toyopet Outdoor World" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Toyopet Outdoor World</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Toyopet RV Paddock" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_toyopetrvpaddock_jp.png" loading="lazy"
+              title="Toyopet RV Paddock" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Toyopet RV Paddock</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Twinkle Knights" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_twinkleknights_jp.png" loading="lazy" title="Twinkle Knights"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Twinkle Knights</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Twisted" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_twisted.png" loading="lazy" title="Twisted"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Twisted</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="V-Goal Soccer '96" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_vgoalsoccer96_jp.png" loading="lazy" title="V-Goal Soccer '96"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">V-Goal Soccer '96</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Virtual Cameraman Part 1: Sawada Naomi and Jurianna"
+      data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_virtualcameramanpar1sawadanaomiandjurianna_jp.png"
+              loading="lazy" title="Virtual Cameraman Part 1: Sawada Naomi and Jurianna"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Virtual Cameraman Part 1: Sawada Naomi and Jurianna</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Virtual Puppet Reika" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_virtualpuppetreika_jp.png" loading="lazy"
+              title="Virtual Puppet Reika" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Virtual Puppet Reika</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="VR Stalker" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_vrstalker.png" loading="lazy" title="VR Stalker"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">VR Stalker</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Way of the Warrior" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_wayofthewarrior.png" loading="lazy" title="Way of the Warrior"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Way of the Warrior</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Who Shot Johnny Rock?" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_whoshotjohnnyrock_2.png" loading="lazy"
+              title="Who Shot Johnny Rock?" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Who Shot Johnny Rock?</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Wing Commander III" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_wingcommander3_7.png" loading="lazy"
+              title="Wing Commander III" onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Wing Commander III</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Winning Post" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_winningpost_jp.png" loading="lazy" title="Winning Post"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Winning Post</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+    <div class="col px-1 mb-4 title-card" data-title-name="Wolfenstein 3D" data-title-status="Play">
+      <a target="_blank" rel="norefferer" href="https://github.com/igiteam/3do-covers">
+        <div class="mx-auto title-card-container">
+          <div class="title-card-image-container" style="position: relative;">
+            <img src="https://cdn.gitgpt.chat/rtx/3do/3do_wolfenstein3d.png" loading="lazy" title="Wolfenstein 3D"
+              onerror="this.closest('.title-card').classList.add('image-failed');">
+            <div class="fallback-title" style="display: none;">Wolfenstein 3D</div>
+          </div>
+          <div class="fill-color-Playable card-body text-center py-1 my-0"><small><strong>Play</strong></small></div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // Convert title cards to links for search
+    function wrapCardsWithLinks() {
+      document.querySelectorAll('.title-card').forEach(card => {
+        // Skip if image failed
+        if (card.classList.contains('image-failed')) return;
+
+        const title = card.getAttribute('data-title-name');
+        const status = card.getAttribute('data-title-status');
+
+        // Remove existing inner link
+        const existingInnerLink = card.querySelector('a');
+        if (existingInnerLink) {
+          while (existingInnerLink.firstChild) {
+            card.insertBefore(existingInnerLink.firstChild, existingInnerLink);
+          }
+          existingInnerLink.remove();
+        }
+
+        let url_path = '';
+        if (title) {
+          url_path = title
+            .toLowerCase()
+            .replace(/[^\w\s-]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-')
+            .replace(/^-|-$/g, '');
+        }
+
+        if (url_path) {
+          const link = document.createElement('a');
+          link.href = 'https://meyt.netlify.app/search/' + url_path + ' 3do';
+          link.className = 'title-card-link';
+          link.rel = 'noopener noreferrer';
+          link.target = '_blank';
+
+          if (title) link.setAttribute('data-title-name', title);
+          if (status) link.setAttribute('data-title-status', status);
+
+          card.parentNode.insertBefore(link, card);
+          link.appendChild(card);
+        }
+      });
+    }
+
+    // Run link wrapping after a delay
+    setTimeout(wrapCardsWithLinks, 500);
+
+    // Search functionality - target title-card-link elements
+    document.getElementById('saved-search-input').addEventListener('input', function (e) {
+      const searchTerm = e.target.value.toLowerCase();
+      const links = document.querySelectorAll('.title-card-link');
+      let count = 0;
+
+      links.forEach(link => {
+        const title = link.getAttribute('data-title-name') || '';
+
+        if (title.toLowerCase().includes(searchTerm) && searchTerm) {
+          link.classList.remove('hidden-game');
+          count++;
+        } else if (searchTerm) {
+          link.classList.add('hidden-game');
+        } else {
+          link.classList.remove('hidden-game');
+        }
+      });
+
+      document.getElementById('saved-results-count').textContent =
+        searchTerm ? `Found ${count} game${count !== 1 ? 's' : ''}` : '';
+    });
+
+    // Keyboard shortcut
+    document.addEventListener('keydown', function (e) {
+      if (e.key === '/' && !document.getElementById('saved-search-input').matches(':focus')) {
+        e.preventDefault();
+        document.getElementById('saved-search-input').focus();
+      }
+    });
+
+    // Initial hide of any images that already failed
+    document.querySelectorAll('.title-card img').forEach(img => {
+      if (img.complete && img.naturalHeight === 0) {
+        img.closest('.title-card').classList.add('image-failed');
+      }
+    });
+  </script>
+</body>
+
+</html>
